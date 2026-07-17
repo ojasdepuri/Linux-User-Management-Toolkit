@@ -24,7 +24,30 @@ do
     case $choice in
 
         1)
-            echo "Create User selected."
+    	    echo
+            read -p "Enter username: " username
+
+            if id "$username" &>/dev/null
+            then
+               echo
+               echo "User '$username' already exists."
+            else
+               sudo useradd "$username"
+
+               if [ $? -eq 0 ]
+               then
+                  echo
+                  echo "User '$username' created successfully."
+
+                  echo
+                  echo "Set password for $username"
+
+                  sudo passwd "$username"
+            else
+               echo
+               echo "Failed to create user."
+               fi
+            fi
             ;;
 
         2)
