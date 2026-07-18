@@ -51,7 +51,26 @@ do
             ;;
 
         2)
-            echo "Delete User selected."
+   	    echo
+            read -p "Enter username to delete: " username
+
+            if id "$username" &>/dev/null
+            then
+               sudo userdel "$username"
+
+               if [ $? -eq 0 ]
+               then
+                  echo
+                  echo "User '$username' deleted successfully."
+               else
+                  echo
+                  echo "Failed to delete user."
+               fi
+
+            else
+               echo
+               echo "User '$username' does not exist."
+            fi
             ;;
 
         3)
