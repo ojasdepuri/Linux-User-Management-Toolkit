@@ -138,8 +138,28 @@ do
             ;; 
 
         6)
-            echo "Unlock User selected."
+            echo
+            read -p "Enter username to unlock: " username
+
+            if id "$username" &>/dev/null
+            then
+               sudo passwd -u "$username"
+
+               if [ $? -eq 0 ]
+               then
+                  echo
+                  echo "User '$username' has been unlocked successfully."
+               else
+                  echo
+                  echo "Failed to unlock user."
+               fi
+
+            else
+               echo
+               echo "User '$username' does not exist."
+            fi
             ;;
+               
 
         7)
             echo "User Information selected."
