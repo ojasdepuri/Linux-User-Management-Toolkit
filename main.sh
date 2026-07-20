@@ -35,16 +35,6 @@ create_user()
 
     if id "$username" &>/dev/null
     then
-       echo
-       echo -e "${RED}Username cannot be empty.${NC}"
-
-    elif [[ ! "$username" =~ ^[a-z_][a-z0-9_-]*$ ]]
-    then
-        echo
-        echo -e "${RED}Invalid username.${NC}"
-
-    elif id "$username" &>/dev/null
-    then
         echo
         echo -e "${RED}User '$username' already exists.${NC}"
 
