@@ -96,3 +96,38 @@ Linux-User-Management-Toolkit/
 ```
 
 ---
+---
+
+## 📸 Screenshots
+
+### Main Menu
+
+![Main Menu](images/menu.png)
+
+### Create User
+
+![Create User](images/create-user.png)
+
+### Delete User
+
+![Delete User](images/delete-user.png)
+
+### List Users
+
+![List Users](images/list-users.png)
+
+### Reset Password
+
+![Reset Password](images/reset-password.png)
+
+### Lock User
+
+![Lock User](images/lock-user.png)
+
+### Unlock User
+
+![Unlock User](images/unlock-user.png)
+
+### User Information
+
+![User Information](images/user-information.png)
