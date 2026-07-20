@@ -8,15 +8,35 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m'
 
+validate_username()
+{
+    if [[ -z "$username" ]]
+    then
+        echo
+        echo -e "${RED}Username cannot be empty.${NC}"
+        return 1
+
+    elif [[ ! "$username" =~ ^[a-z_][a-z0-9_-]*$ ]]
+    then
+        echo
+        echo -e "${RED}Invalid username.${NC}"
+        return 1
+    fi
+
+    return 0
+}
+
 create_user()
 {
     echo
     read -p "Enter username: " username
 
-    if [[ -z "$username" ]]
+    validate_username || return
+
+    if id "$username" &>/dev/null
     then
-        echo
-        echo -e "${RED}Username cannot be empty.${NC}"
+       echo
+       echo -e "${RED}Username cannot be empty.${NC}"
 
     elif [[ ! "$username" =~ ^[a-z_][a-z0-9_-]*$ ]]
     then
@@ -54,17 +74,9 @@ delete_user()
     echo
     read -p "Enter username to delete: " username
 
-    if [[ -z "$username" ]]
-    then
-        echo
-        echo -e "${RED}Username cannot be empty.${NC}"
+    validate_username || return
 
-    elif [[ ! "$username" =~ ^[a-z_][a-z0-9_-]*$ ]]
-    then
-        echo
-        echo -e "${RED}Invalid username.${NC}"
-
-    elif id "$username" &>/dev/null
+    if id "$username" &>/dev/null
     then
         sudo userdel "$username"
 
@@ -103,32 +115,21 @@ reset_password()
     echo
     read -p "Enter username: " username
 
-    if [[ -z "$username" ]]
+    validate_username || return
+
+    if id "$username" &>/dev/null
     then
         echo
-        echo -e "${RED}Username cannot be empty.${NC}"
-
-    elif [[ ! "$username" =~ ^[a-z_][a-z0-9_-]*$ ]]
-    then
-        echo
-        echo -e "${RED}Invalid username.${NC}"
-
-    elif id "$username" &>/dev/null
-    then
-        echo
-        echo -e "${YELLOW}Resetting password for '$username'...${NC}"
-        echo
-
         sudo passwd "$username"
 
         if [ $? -eq 0 ]
         then
             echo
-            echo -e "${GREEN}Password updated successfully.${NC}"
+            echo -e "${GREEN}Password reset successfully for '$username'.${NC}"
             echo "[$(date "+%Y-%m-%d %H:%M:%S")] Password reset for '$username'." >> Logs/activity.log
         else
             echo
-            echo -e "${RED}Failed to update password.${NC}"
+            echo -e "${RED}Failed to reset password.${NC}"
         fi
 
     else
@@ -142,17 +143,9 @@ lock_user()
     echo
     read -p "Enter username to lock: " username
 
-    if [[ -z "$username" ]]
-    then
-        echo
-        echo -e "${RED}Username cannot be empty.${NC}"
+    validate_username || return
 
-    elif [[ ! "$username" =~ ^[a-z_][a-z0-9_-]*$ ]]
-    then
-        echo
-        echo -e "${RED}Invalid username.${NC}"
-
-    elif id "$username" &>/dev/null
+    if id "$username" &>/dev/null
     then
         sudo passwd -l "$username"
 
@@ -177,17 +170,9 @@ unlock_user()
     echo
     read -p "Enter username to unlock: " username
 
-    if [[ -z "$username" ]]
-    then
-        echo
-        echo -e "${RED}Username cannot be empty.${NC}"
+    validate_username || return
 
-    elif [[ ! "$username" =~ ^[a-z_][a-z0-9_-]*$ ]]
-    then
-        echo
-        echo -e "${RED}Invalid username.${NC}"
-
-    elif id "$username" &>/dev/null
+    if id "$username" &>/dev/null
     then
         sudo passwd -u "$username"
 
@@ -216,17 +201,9 @@ user_information()
 
     read -p "Enter username: " username
 
-    if [[ -z "$username" ]]
-    then
-        echo
-        echo -e "${RED}Username cannot be empty.${NC}"
+    validate_username || return
 
-    elif [[ ! "$username" =~ ^[a-z_][a-z0-9_-]*$ ]]
-    then
-        echo
-        echo -e "${RED}Invalid username.${NC}"
-
-    elif id "$username" &>/dev/null
+    if id "$username" &>/dev/null
     then
         user_info=$(getent passwd "$username")
 
