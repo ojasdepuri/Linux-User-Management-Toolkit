@@ -87,8 +87,32 @@ do
             ;;
 
         4)
-            echo "Reset Password selected."
-            ;;
+            echo
+            read -p "Enter username: " username
+
+            if id "$username" &>/dev/null
+            then
+               echo
+               echo "Resetting password for '$username'..."
+               echo
+
+               sudo passwd "$username"
+
+               if [ $? -eq 0 ]
+               then
+                  echo
+                  echo "Password updated successfully."
+               else
+                  echo
+                  echo "Failed to update password."
+               fi
+
+            else
+               echo
+               echo "User '$username' does not exist."
+            fi
+            ;;    
+        
 
         5)
             echo "Lock User selected."
