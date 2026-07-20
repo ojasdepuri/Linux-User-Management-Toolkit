@@ -162,7 +162,30 @@ do
                
 
         7)
-            echo "User Information selected."
+            echo
+            echo "========================================="
+            echo "         User Information"
+            echo "========================================="
+
+            read -p "Enter username: " username
+
+            if id "$username" &>/dev/null
+            then
+               user_info=$(getent passwd "$username")
+
+               echo
+               echo "Username       : $(echo "$user_info" | cut -d: -f1)"
+               echo "UID            : $(echo "$user_info" | cut -d: -f3)"
+               echo "GID            : $(echo "$user_info" | cut -d: -f4)"
+               echo "Home Directory : $(echo "$user_info" | cut -d: -f6)"
+               echo "Shell          : $(echo "$user_info" | cut -d: -f7)"
+
+            else
+               echo
+               echo "User '$username' does not exist."
+            fi
+
+            echo "========================================="
             ;;
 
         8)
