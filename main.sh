@@ -152,7 +152,7 @@ do
                 echo
                 echo -e "${RED}User '$username' does not exist.${NC}"
             fi
-            ;;
+	    ;;
  
         5)
             echo
