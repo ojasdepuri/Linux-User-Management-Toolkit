@@ -1,12 +1,19 @@
 #!/bin/bash
 
+# Colors
+
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
 while true
 do
     clear
-
-    echo "========================================="
-    echo "     Linux User Management Toolkit"
-    echo "========================================="
+    echo -e "${BLUE}=========================================${NC}"
+    echo -e "${BLUE}     Linux User Management Toolkit${NC}"
+    echo -e "${BLUE}=========================================${NC}"
     echo
     echo "1. Create User"
     echo "2. Delete User"
@@ -30,17 +37,17 @@ do
             if [[ -z "$username" ]]
             then
                 echo
-                echo "Username cannot be empty."
+                echo -e "${RED}Username cannot be empty.${NC}"
 
             elif [[ ! "$username" =~ ^[a-z_][a-z0-9_-]*$ ]]
             then
                 echo
-                echo "Invalid username."
+                echo -e "${RED}Invalid username.${NC}"
 
             elif id "$username" &>/dev/null
             then
                 echo
-                echo "User '$username' already exists."
+                echo -e "${RED}User '$username' does not exist.${NC}"
 
             else
                 sudo useradd "$username"
@@ -48,7 +55,7 @@ do
                 if [ $? -eq 0 ]
                 then
                     echo
-                    echo "User '$username' created successfully."
+		    echo -e "${GREEN}User '$username' created successfully.${NC}"
 
                     echo "[$(date "+%Y-%m-%d %H:%M:%S")] User '$username' created successfully." >> logs/activity.log
 
@@ -58,7 +65,7 @@ do
                     sudo passwd "$username"
                 else
                     echo
-                    echo "Failed to create user."
+                    echo -e "${RED}Failed to create user.${NC}"
                 fi
             fi
             ;;
@@ -70,12 +77,12 @@ do
             if [[ -z "$username" ]]
             then
                 echo
-                echo "Username cannot be empty."
+                echo -e "${RED}Username cannot be empty.${NC}"
 
             elif [[ ! "$username" =~ ^[a-z_][a-z0-9_-]*$ ]]
             then
                 echo
-                echo "Invalid username."
+                echo -e "${RED}Invalid username.${NC}"
 
             elif id "$username" &>/dev/null
             then
@@ -84,7 +91,7 @@ do
                 if [ $? -eq 0 ]
                 then
                     echo
-                    echo "User '$username' deleted successfully."
+		    echo -e "${GREEN}User '$username' deleted successfully.${NC}"
                     echo "[$(date "+%Y-%m-%d %H:%M:%S")] User '$username' deleted successfully." >> Logs/activity.log
                 else
                     echo
@@ -93,7 +100,7 @@ do
 
             else
                 echo
-                echo "User '$username' does not exist."
+                echo -e "${RED}User '$username' does not exist.${NC}"
             fi
             ;; 
         3)
@@ -116,17 +123,17 @@ do
             if [[ -z "$username" ]]
             then
                 echo
-                echo "Username cannot be empty."
+                echo -e "${RED}Username cannot be empty.${NC}"
 
             elif [[ ! "$username" =~ ^[a-z_][a-z0-9_-]*$ ]]
             then
                 echo
-                echo "Invalid username."
+                echo -e "${RED}Invalid username.${NC}"
 
             elif id "$username" &>/dev/null
             then
                 echo
-                echo "Resetting password for '$username'..."
+                echo -e "${YELLOW}Resetting password for '$username'...${NC}"
                 echo
 
                 sudo passwd "$username"
@@ -134,7 +141,7 @@ do
                 if [ $? -eq 0 ]
                 then
                     echo
-                    echo "Password updated successfully."
+                    echo -e "${GREEN}Password updated successfully.${NC}"
                     echo "[$(date "+%Y-%m-%d %H:%M:%S")] Password reset for '$username'." >> Logs/activity.log
                 else
                     echo
@@ -143,7 +150,7 @@ do
 
             else
                 echo
-                echo "User '$username' does not exist."
+                echo -e "${RED}User '$username' does not exist.${NC}"
             fi
             ;;
  
@@ -154,12 +161,12 @@ do
             if [[ -z "$username" ]]
             then
                 echo
-                echo "Username cannot be empty."
+                echo -e "${RED}Username cannot be empty.${NC}"
 
             elif [[ ! "$username" =~ ^[a-z_][a-z0-9_-]*$ ]]
             then
                 echo
-                echo "Invalid username."
+                echo -e "${RED}Invalid username.${NC}"
 
             elif id "$username" &>/dev/null
             then
@@ -168,7 +175,7 @@ do
                 if [ $? -eq 0 ]
                 then
                     echo
-                    echo "User '$username' has been locked successfully."
+                    echo -e "${GREEN}User '$username' has been locked successfully.${NC}"
                     echo "[$(date "+%Y-%m-%d %H:%M:%S")] User '$username' locked." >> Logs/activity.log
                 else
                     echo
@@ -177,7 +184,7 @@ do
 
             else
                 echo
-                echo "User '$username' does not exist."
+                echo -e "${RED}User '$username' does not exist.${NC}"
             fi
             ;;
 
@@ -188,12 +195,12 @@ do
             if [[ -z "$username" ]]
             then
                 echo
-                echo "Username cannot be empty."
+                echo -e "${RED}Username cannot be empty.${NC}"
 
             elif [[ ! "$username" =~ ^[a-z_][a-z0-9_-]*$ ]]
             then
                 echo
-                echo "Invalid username."
+                echo -e "${RED}Invalid username.${NC}"
 
             elif id "$username" &>/dev/null
             then
@@ -202,7 +209,7 @@ do
                 if [ $? -eq 0 ]
                 then
                     echo
-                    echo "User '$username' has been unlocked successfully."
+                    echo -e "${GREEN}User '$username' has been unlocked successfully.${NC}"
                     echo "[$(date "+%Y-%m-%d %H:%M:%S")] User '$username' unlocked." >> Logs/activity.log
                 else
                     echo
@@ -211,7 +218,7 @@ do
 
             else
                 echo
-                echo "User '$username' does not exist."
+                echo -e "${RED}User '$username' does not exist.${NC}"
             fi
             ;;
 
@@ -226,12 +233,12 @@ do
             if [[ -z "$username" ]]
             then
                 echo
-                echo "Username cannot be empty."
+                echo -e "${RED}Username cannot be empty.${NC}"
 
             elif [[ ! "$username" =~ ^[a-z_][a-z0-9_-]*$ ]]
             then
                 echo
-                echo "Invalid username."
+                echo -e "${RED}Invalid username.${NC}"
 
             elif id "$username" &>/dev/null
             then
@@ -246,7 +253,7 @@ do
 
             else
                 echo
-                echo "User '$username' does not exist."
+                echo -e "${RED}User '$username' does not exist.${NC}"
             fi
 
             echo "========================================="
