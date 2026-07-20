@@ -1,6 +1,6 @@
 # 🐧 Linux User Management Toolkit
 
-A menu-driven Bash scripting project that automates Linux user management tasks. This toolkit simplifies common administrative operations such as creating users, deleting users, resetting passwords, locking/unlocking user accounts, and viewing user information through an interactive command-line interface.
+Menu-driven Bash toolkit for Linux user management with logging, input validation, and colored terminal output. This toolkit simplifies common administrative operations such as creating users, deleting users, resetting passwords, locking/unlocking user accounts, and viewing user information through an interactive command-line interface.
 
 ---
 
