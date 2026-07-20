@@ -38,6 +38,7 @@ do
                then
                   echo
                   echo "User '$username' created successfully."
+		  echo "[$(date "+%Y-%m-%d %H:%M:%S")] User '$username' created successfully." >> Logs/activity.log
 
                   echo
                   echo "Set password for $username"
@@ -62,6 +63,7 @@ do
                then
                   echo
                   echo "User '$username' deleted successfully."
+		  echo "[$(date "+%Y-%m-%d %H:%M:%S")] User '$username' deleted successfully." >> Logs/activity.log
                else
                   echo
                   echo "Failed to delete user."
@@ -102,6 +104,7 @@ do
                then
                   echo
                   echo "Password updated successfully."
+		  echo "[$(date "+%Y-%m-%d %H:%M:%S")] Password reset for '$username'." >> Logs/activity.log
                else
                   echo
                   echo "Failed to update password."
@@ -126,6 +129,7 @@ do
                then
                   echo
                   echo "User '$username' has been locked successfully."
+		  echo "[$(date "+%Y-%m-%d %H:%M:%S")] User '$username' locked." >> Logs/activity.log
                else
                   echo
                   echo "Failed to lock user."
@@ -149,6 +153,7 @@ do
                then
                   echo
                   echo "User '$username' has been unlocked successfully."
+		  echo "[$(date "+%Y-%m-%d %H:%M:%S")] User '$username' unlocked." >> Logs/activity.log
                else
                   echo
                   echo "Failed to unlock user."
