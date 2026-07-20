@@ -114,9 +114,28 @@ do
             ;;    
         
 
-        5)
-            echo "Lock User selected."
-            ;;
+       5)
+            echo
+            read -p "Enter username to lock: " username
+
+            if id "$username" &>/dev/null
+            then
+               sudo passwd -l "$username"
+
+               if [ $? -eq 0 ]
+               then
+                  echo
+                  echo "User '$username' has been locked successfully."
+               else
+                  echo
+                  echo "Failed to lock user."
+               fi
+
+            else
+               echo
+               echo "User '$username' does not exist."
+            fi
+            ;; 
 
         6)
             echo "Unlock User selected."
