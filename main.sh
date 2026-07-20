@@ -23,31 +23,43 @@ do
 
     case $choice in
 
-        1)
-    	    echo
+	1)
+            echo
             read -p "Enter username: " username
 
-            if id "$username" &>/dev/null
+            if [[ -z "$username" ]]
             then
-               echo
-               echo "User '$username' already exists."
+                echo
+                echo "Username cannot be empty."
+
+            elif [[ ! "$username" =~ ^[a-z_][a-z0-9_-]*$ ]]
+            then
+                echo
+                echo "Invalid username."
+
+            elif id "$username" &>/dev/null
+            then
+                echo
+                echo "User '$username' already exists."
+
             else
-               sudo useradd "$username"
+                sudo useradd "$username"
 
-               if [ $? -eq 0 ]
-               then
-                  echo
-                  echo "User '$username' created successfully."
-		  echo "[$(date "+%Y-%m-%d %H:%M:%S")] User '$username' created successfully." >> Logs/activity.log
+                if [ $? -eq 0 ]
+                then
+                    echo
+                    echo "User '$username' created successfully."
 
-                  echo
-                  echo "Set password for $username"
+                    echo "[$(date "+%Y-%m-%d %H:%M:%S")] User '$username' created successfully." >> logs/activity.log
 
-                  sudo passwd "$username"
-            else
-               echo
-               echo "Failed to create user."
-               fi
+                    echo
+                    echo "Set password for $username"
+
+                    sudo passwd "$username"
+                else
+                    echo
+                    echo "Failed to create user."
+                fi
             fi
             ;;
 
@@ -55,26 +67,35 @@ do
    	    echo
             read -p "Enter username to delete: " username
 
-            if id "$username" &>/dev/null
+            if [[ -z "$username" ]]
             then
-               sudo userdel "$username"
+                echo
+                echo "Username cannot be empty."
 
-               if [ $? -eq 0 ]
-               then
-                  echo
-                  echo "User '$username' deleted successfully."
-		  echo "[$(date "+%Y-%m-%d %H:%M:%S")] User '$username' deleted successfully." >> Logs/activity.log
-               else
-                  echo
-                  echo "Failed to delete user."
-               fi
+            elif [[ ! "$username" =~ ^[a-z_][a-z0-9_-]*$ ]]
+            then
+                echo
+                echo "Invalid username."
+
+            elif id "$username" &>/dev/null
+            then
+                sudo userdel "$username"
+
+                if [ $? -eq 0 ]
+                then
+                    echo
+                    echo "User '$username' deleted successfully."
+                    echo "[$(date "+%Y-%m-%d %H:%M:%S")] User '$username' deleted successfully." >> Logs/activity.log
+                else
+                    echo
+                    echo "Failed to delete user."
+                fi
 
             else
-               echo
-               echo "User '$username' does not exist."
+                echo
+                echo "User '$username' does not exist."
             fi
-            ;;
-
+            ;; 
         3)
             echo
             echo "========================================="
@@ -92,79 +113,107 @@ do
             echo
             read -p "Enter username: " username
 
-            if id "$username" &>/dev/null
+            if [[ -z "$username" ]]
             then
-               echo
-               echo "Resetting password for '$username'..."
-               echo
+                echo
+                echo "Username cannot be empty."
 
-               sudo passwd "$username"
+            elif [[ ! "$username" =~ ^[a-z_][a-z0-9_-]*$ ]]
+            then
+                echo
+                echo "Invalid username."
 
-               if [ $? -eq 0 ]
-               then
-                  echo
-                  echo "Password updated successfully."
-		  echo "[$(date "+%Y-%m-%d %H:%M:%S")] Password reset for '$username'." >> Logs/activity.log
-               else
-                  echo
-                  echo "Failed to update password."
-               fi
+            elif id "$username" &>/dev/null
+            then
+                echo
+                echo "Resetting password for '$username'..."
+                echo
+
+                sudo passwd "$username"
+
+                if [ $? -eq 0 ]
+                then
+                    echo
+                    echo "Password updated successfully."
+                    echo "[$(date "+%Y-%m-%d %H:%M:%S")] Password reset for '$username'." >> Logs/activity.log
+                else
+                    echo
+                    echo "Failed to update password."
+                fi
 
             else
-               echo
-               echo "User '$username' does not exist."
+                echo
+                echo "User '$username' does not exist."
             fi
-            ;;    
-        
-
-       5)
+            ;;
+ 
+        5)
             echo
             read -p "Enter username to lock: " username
 
-            if id "$username" &>/dev/null
+            if [[ -z "$username" ]]
             then
-               sudo passwd -l "$username"
+                echo
+                echo "Username cannot be empty."
 
-               if [ $? -eq 0 ]
-               then
-                  echo
-                  echo "User '$username' has been locked successfully."
-		  echo "[$(date "+%Y-%m-%d %H:%M:%S")] User '$username' locked." >> Logs/activity.log
-               else
-                  echo
-                  echo "Failed to lock user."
-               fi
+            elif [[ ! "$username" =~ ^[a-z_][a-z0-9_-]*$ ]]
+            then
+                echo
+                echo "Invalid username."
+
+            elif id "$username" &>/dev/null
+            then
+                sudo passwd -l "$username"
+
+                if [ $? -eq 0 ]
+                then
+                    echo
+                    echo "User '$username' has been locked successfully."
+                    echo "[$(date "+%Y-%m-%d %H:%M:%S")] User '$username' locked." >> Logs/activity.log
+                else
+                    echo
+                    echo "Failed to lock user."
+                fi
 
             else
-               echo
-               echo "User '$username' does not exist."
+                echo
+                echo "User '$username' does not exist."
             fi
-            ;; 
+            ;;
 
         6)
             echo
             read -p "Enter username to unlock: " username
 
-            if id "$username" &>/dev/null
+            if [[ -z "$username" ]]
             then
-               sudo passwd -u "$username"
+                echo
+                echo "Username cannot be empty."
 
-               if [ $? -eq 0 ]
-               then
-                  echo
-                  echo "User '$username' has been unlocked successfully."
-		  echo "[$(date "+%Y-%m-%d %H:%M:%S")] User '$username' unlocked." >> Logs/activity.log
-               else
-                  echo
-                  echo "Failed to unlock user."
-               fi
+            elif [[ ! "$username" =~ ^[a-z_][a-z0-9_-]*$ ]]
+            then
+                echo
+                echo "Invalid username."
+
+            elif id "$username" &>/dev/null
+            then
+                sudo passwd -u "$username"
+
+                if [ $? -eq 0 ]
+                then
+                    echo
+                    echo "User '$username' has been unlocked successfully."
+                    echo "[$(date "+%Y-%m-%d %H:%M:%S")] User '$username' unlocked." >> Logs/activity.log
+                else
+                    echo
+                    echo "Failed to unlock user."
+                fi
 
             else
-               echo
-               echo "User '$username' does not exist."
+                echo
+                echo "User '$username' does not exist."
             fi
             ;;
-               
 
         7)
             echo
@@ -174,20 +223,30 @@ do
 
             read -p "Enter username: " username
 
-            if id "$username" &>/dev/null
+            if [[ -z "$username" ]]
             then
-               user_info=$(getent passwd "$username")
+                echo
+                echo "Username cannot be empty."
 
-               echo
-               echo "Username       : $(echo "$user_info" | cut -d: -f1)"
-               echo "UID            : $(echo "$user_info" | cut -d: -f3)"
-               echo "GID            : $(echo "$user_info" | cut -d: -f4)"
-               echo "Home Directory : $(echo "$user_info" | cut -d: -f6)"
-               echo "Shell          : $(echo "$user_info" | cut -d: -f7)"
+            elif [[ ! "$username" =~ ^[a-z_][a-z0-9_-]*$ ]]
+            then
+                echo
+                echo "Invalid username."
+
+            elif id "$username" &>/dev/null
+            then
+                user_info=$(getent passwd "$username")
+
+                echo
+                echo "Username       : $(echo "$user_info" | cut -d: -f1)"
+                echo "UID            : $(echo "$user_info" | cut -d: -f3)"
+                echo "GID            : $(echo "$user_info" | cut -d: -f4)"
+                echo "Home Directory : $(echo "$user_info" | cut -d: -f6)"
+                echo "Shell          : $(echo "$user_info" | cut -d: -f7)"
 
             else
-               echo
-               echo "User '$username' does not exist."
+                echo
+                echo "User '$username' does not exist."
             fi
 
             echo "========================================="
